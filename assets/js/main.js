@@ -88,62 +88,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', () => {
-            const isHidden = mobileMenu.classList.contains('hidden');
-
-            // Clear any pending animation timers
-            if (mobileMenuTimer) clearTimeout(mobileMenuTimer);
-
-            if (isHidden) {
-                // Open menu
-                mobileMenu.classList.remove('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'true');
-
-                // Small delay to allow 'hidden' removal to take effect before animating
-                mobileMenuTimer = setTimeout(() => {
-                    mobileMenu.classList.remove('max-h-0');
-                    mobileMenu.classList.remove('opacity-0');
-                    mobileMenu.classList.add('max-h-[500px]');
-                    mobileMenu.classList.add('opacity-100');
-                    mobileMenuTimer = null;
-                }, 10);
-
-                menuIcon.classList.add('hidden');
-                closeIcon.classList.remove('hidden');
+            if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                closeMenu();
             } else {
-                // Close menu
-                mobileMenu.classList.remove('max-h-[500px]');
-                mobileMenu.classList.remove('opacity-100');
-                mobileMenu.classList.add('max-h-0');
-                mobileMenu.classList.add('opacity-0');
-                mobileMenuButton.setAttribute('aria-expanded', 'false');
-
-                // Wait for transition to finish before hiding
-                mobileMenuTimer = setTimeout(() => {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuTimer = null;
-                }, 300);
-
-                menuIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
+                openMenu();
             }
         });
 
         // Close menu on resize if screen becomes desktop-sized
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768) {
-                if (mobileMenuTimer) {
-                    clearTimeout(mobileMenuTimer);
-                    mobileMenuTimer = null;
-                }
-
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.add('max-h-0');
-                mobileMenu.classList.add('opacity-0');
-                mobileMenu.classList.remove('max-h-[500px]');
-                mobileMenu.classList.remove('opacity-100');
-                menuIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
-                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                 closeMenu(true);
             }
         });
     }
