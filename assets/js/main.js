@@ -86,8 +86,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeIcon = document.getElementById('close-icon');
     let mobileMenuTimer = null;
 
-    if (mobileMenuButton && mobileMenu) {
+    if (mobileMenuButton && mobileMenu && menuIcon && closeIcon) {
         const openMenu = () => {
+            if (mobileMenuTimer) {
+                clearTimeout(mobileMenuTimer);
+                mobileMenuTimer = null;
+            }
             mobileMenu.classList.remove('hidden');
             // Trigger reflow for transition
             mobileMenu.offsetHeight;
