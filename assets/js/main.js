@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function filterCourses() {
             const categoryValue = categoryFilter.value.toLowerCase();
             const levelValue = levelFilter.value.toLowerCase();
-            const searchValue = searchFilter.value.toLowerCase();
+            const searchValue = searchFilter.value.trim().toLowerCase();
 
             const courses = coursesGrid.getElementsByClassName('course-card');
             let visibleCount = 0;
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Array.from(courses).forEach(course => {
                 const courseCategory = course.getAttribute('data-category');
                 const courseLevel = course.getAttribute('data-level');
-                const courseSearch = course.getAttribute('data-search');
+                const courseSearch = course.getAttribute('data-search') ?? '';
 
                 const categoryMatch = !categoryValue || courseCategory === categoryValue;
                 const levelMatch = !levelValue || courseLevel === levelValue;
