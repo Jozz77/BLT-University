@@ -28,21 +28,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 const searchMatch = !searchValue || courseSearch.includes(searchValue);
 
                 if (categoryMatch && levelMatch && searchMatch) {
-                    course.style.display = '';
+                    course.classList.remove('hidden');
                     visibleCount++;
                 } else {
-                    course.style.display = 'none';
+                    course.classList.add('hidden');
                 }
             });
 
             if (noResults) {
-                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                    coursesGrid.classList.add('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                    coursesGrid.classList.remove('hidden');
+                }
             }
         }
 
         categoryFilter.addEventListener('change', filterCourses);
         levelFilter.addEventListener('change', filterCourses);
         searchFilter.addEventListener('input', filterCourses);
+
+        // Initial filter
+        filterCourses();
     }
 
     // Parse URL parameters for enrollment
